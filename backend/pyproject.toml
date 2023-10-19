@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "vnv-test"
+version = "0.1.0"
+description = ""
+authors = ["bogd1 <bgnydyn@gmail.com>"]
+readme = "README.md"
+packages = [{include = "vnv_test"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2.6"
+psycopg2 = "^2.9.9"
+python-dotenv = "^1.0.0"
+djangorestframework = "^3.14.0"
+flake8 = "^6.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
