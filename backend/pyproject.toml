@@ -13,6 +13,9 @@ psycopg2 = "^2.9.9"
 python-dotenv = "^1.0.0"
 djangorestframework = "^3.14.0"
 flake8 = "^6.1.0"
+django-annoying = "^0.10.6"
+auto-dataclass = "^0.1.6"
+dependency-injector = "^4.41.0"
 
 
 [build-system]

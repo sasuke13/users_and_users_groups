@@ -3,6 +3,7 @@ from groups.models import Groups
 
 
 class Users(models.Model):
-    username = models.CharField(unique=True, max_length=128)
+    email = models.EmailField(unique=True)
     created = models.DateTimeField(auto_now_add=True, editable=False)
-    group = models.ForeignKey(to=Groups, on_delete=models.SET_NULL, null=True)
+    group = models.ForeignKey(to=Groups, related_name="users", on_delete=models.SET_NULL, null=True)
+    admin = models.BooleanField(default=False)
