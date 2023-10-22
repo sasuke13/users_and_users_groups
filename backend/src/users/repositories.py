@@ -18,14 +18,13 @@ class UsersRepository(UserRepositoryInterface):
 
     def get_user_by_id(self, id: int) -> Users:
         user = get_object_or_None(Users.objects.select_related('group'), id=id)
-        print(user.group)
         if not user:
             raise InstanceDoesNotExist(f"User with id: {id} does not exist!")
 
         return user
 
     def get_all_users_dto(self) -> Iterable[UsersDTO]:
-        users = Users.objects.select_related('group').all()
+        users = Users.objects.prefetch_related('group').all()
 
         return map(self.converter.to_dto, users, repeat(UsersDTO))
 
@@ -50,6 +49,5 @@ class UsersRepository(UserRepositoryInterface):
 
     def delete_user(self, user_to_delete: Users) -> str:
         user_to_delete.delete()
-        user_to_delete.save()
 
         return 'User was successfully deleted!'

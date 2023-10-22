@@ -16,6 +16,7 @@ flake8 = "^6.1.0"
 django-annoying = "^0.10.6"
 auto-dataclass = "^0.1.6"
 dependency-injector = "^4.41.0"
+django-cors-headers = "^4.3.0"
 
 
 [build-system]

@@ -48,12 +48,8 @@ class GroupsRepository(GroupsRepositoryInterface):
         return self.converter.to_dto(group, GroupsDTO)
 
     def delete_group(self, group: Groups) -> str:
-        print()
-        print(group.users is None)
-        print(group.users)
-        if group.users is not None:
+        if group.users.all():
             raise DeletingForbiddenException('Deletion of group forbidden if user is the member of it!')
         group.delete()
-        group.save()
 
         return 'Group was successfully deleted!'
