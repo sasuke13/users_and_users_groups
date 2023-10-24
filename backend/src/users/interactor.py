@@ -1,5 +1,6 @@
-from typing import Iterable
+from typing import Iterable, Optional
 
+from core.exceptions import InstanceDoesNotExist
 from groups.interfaces import GroupsInteractorInterface
 from users.dto import UsersDTO, CreateUserDTO, UpdateUserDTO
 from users.interfaces import UserRepositoryInterface, UserInteractorInterface
@@ -11,8 +12,8 @@ class UsersInteractor(UserInteractorInterface):
         self.users_repository = users_repository
         self.groups_interactor = groups_interactor
 
-    def does_user_exists_by_email(self, email: str):
-        return self.users_repository.does_user_exists_by_email(email)
+    def does_user_exists_by_email(self, email: str, id: Optional[int] = None):
+        return self.users_repository.does_user_exists_by_email(email, id)
 
     def get_user_by_id(self, id: int) -> Users:
         return self.users_repository.get_user_by_id(id)
@@ -27,11 +28,15 @@ class UsersInteractor(UserInteractorInterface):
         return self.users_repository.create_user(create_user_dto, group)
 
     def update_user(self, update_user_dto: UpdateUserDTO) -> UsersDTO:
-        if update_user_dto.email:
-            self.users_repository.does_user_exists_by_email(update_user_dto.email)
-
         user = self.get_user_by_id(update_user_dto.user_id)
-        group = self.groups_interactor.get_group_by_id(update_user_dto.group_id)
+
+        if update_user_dto.email:
+            self.users_repository.does_user_exists_by_email(update_user_dto.email, update_user_dto.user_id)
+
+        try:
+            group = self.groups_interactor.get_group_by_id(update_user_dto.group_id)
+        except InstanceDoesNotExist:
+            group = None
 
         return self.users_repository.update_user(update_user_dto, user, group)
 

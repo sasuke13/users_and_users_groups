@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Iterable
+from typing import Iterable, Optional
 
 from core.abstract_classes import AbstractRepository
 from groups.models import Groups
@@ -9,7 +9,7 @@ from users.models import Users
 
 class UserInteractorInterface(ABC):
     @abstractmethod
-    def does_user_exists_by_email(self, email: str):
+    def does_user_exists_by_email(self, email: str, id: Optional[int] = None):
         pass
 
     @abstractmethod
@@ -35,7 +35,7 @@ class UserInteractorInterface(ABC):
 
 class UserRepositoryInterface(ABC, AbstractRepository):
     @abstractmethod
-    def does_user_exists_by_email(self, email: str):
+    def does_user_exists_by_email(self, email: str, id: Optional[int] = None):
         pass
 
     @abstractmethod
@@ -47,7 +47,7 @@ class UserRepositoryInterface(ABC, AbstractRepository):
         pass
 
     @abstractmethod
-    def create_user(self, update_user_dto: UpdateUserDTO, group: Groups | None) -> UsersDTO:
+    def create_user(self, create_user_dto: CreateUserDTO, group: Groups | None) -> UsersDTO:
         pass
 
     @abstractmethod

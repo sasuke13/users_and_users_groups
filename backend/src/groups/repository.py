@@ -12,7 +12,6 @@ from groups.models import Groups
 class GroupsRepository(GroupsRepositoryInterface):
     def get_group_by_id(self, group_id: int) -> Groups:
         group = get_object_or_None(Groups.objects.prefetch_related('users'), id=group_id)
-        print(group.users)
         if not group:
             raise InstanceDoesNotExist(f'Group with id: {group_id} does not exist!')
 

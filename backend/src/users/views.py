@@ -65,11 +65,11 @@ class UsersAPIView(APIView, ApiBaseView):
         users_interactor = UsersContainer.interactor()
 
         try:
-            created_user = users_interactor.update_user(update_user_dto)
+            updated_user = users_interactor.update_user(update_user_dto)
         except (InstanceAlreadyExists, InstanceDoesNotExist) as exception:
             return self._create_response_for_exception(exception)
 
-        serialized_user = UsersSerializer(created_user)
+        serialized_user = UsersSerializer(updated_user)
 
         return Response({
             'message': 'User was successfully updated!',

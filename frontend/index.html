@@ -3,26 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
     <header>
         <a class="head_anchors">Users</a>
         <a class="head_anchors">Groups</a>
-        <button class="add_button">Add users</button>
+        <button class="add_button" id="showFormButton">Add users</button>
+        <div id="formContainer" class="hidden">
+            <input type="email" name="email" id="email" placeholder="Email">
+            <input type="checkbox" name="admin" id="is_admin" placeholder="Is admin">
+            <select name="group" id="select_group"></select>
+            <button id="sendButton">Send</button>
+            <button id="closeButton">Close</button>
+        </div>
     </header>
 
-    <table>
-        <tr>
-            <th>id</th>
-            <th>Email</th>
-            <th>Group</th>
-            <th>Admin</th>
-            <th>Actions</th>
-        </tr>
+
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Email</th>
+                <th>Group</th>
+                <th>Admin</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="table">
+
+        </tbody>
     </table>
     
-    <button id="button">button</button>
     <script src="script.js"></script>
 </body>
 </html>
