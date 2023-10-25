@@ -14,7 +14,6 @@ class ApiBaseView:
             serializer_errors = serializer_instance.errors
             if serializer_errors:
                 errors.update(serializer_errors)
-            print(errors)
         return Response({"errors": errors}, status=status.HTTP_400_BAD_REQUEST)
 
     def _create_response_for_exception(self, exception):

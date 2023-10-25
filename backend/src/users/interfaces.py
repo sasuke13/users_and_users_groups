@@ -47,7 +47,7 @@ class UserRepositoryInterface(ABC, AbstractRepository):
         pass
 
     @abstractmethod
-    def create_user(self, create_user_dto: CreateUserDTO, group: Groups | None) -> UsersDTO:
+    def create_user(self, create_user_dto: CreateUserDTO) -> UsersDTO:
         pass
 
     @abstractmethod

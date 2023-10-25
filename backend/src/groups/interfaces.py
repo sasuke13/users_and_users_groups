@@ -1,5 +1,5 @@
 from abc import ABC,  abstractmethod
-from typing import Iterable
+from typing import Iterable, Optional
 
 from core.abstract_classes import AbstractRepository
 from groups.dto import GroupsWithoutIDDTO, GroupsDTO
@@ -12,7 +12,7 @@ class GroupsInteractorInterface(ABC):
         pass
 
     @abstractmethod
-    def does_group_exist_by_name(self, group_name: str):
+    def does_group_exist_by_name(self, group_name: str, id: Optional[int] = None):
         pass
 
     @abstractmethod
@@ -38,7 +38,7 @@ class GroupsRepositoryInterface(ABC, AbstractRepository):
         pass
 
     @abstractmethod
-    def does_group_exist_by_name(self, group_name: str):
+    def does_group_exist_by_name(self, group_name: str, id: Optional[int] = None):
         pass
 
     @abstractmethod

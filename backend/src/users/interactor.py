@@ -23,9 +23,13 @@ class UsersInteractor(UserInteractorInterface):
 
     def create_user(self, create_user_dto: CreateUserDTO) -> UsersDTO:
         self.users_repository.does_user_exists_by_email(create_user_dto.email)
-        group = self.groups_interactor.get_group_by_id(create_user_dto.group_id)
 
-        return self.users_repository.create_user(create_user_dto, group)
+        try:
+            self.groups_interactor.get_group_by_id(create_user_dto.group_id)
+        except InstanceDoesNotExist:
+            create_user_dto.group_id = None
+
+        return self.users_repository.create_user(create_user_dto)
 
     def update_user(self, update_user_dto: UpdateUserDTO) -> UsersDTO:
         user = self.get_user_by_id(update_user_dto.user_id)

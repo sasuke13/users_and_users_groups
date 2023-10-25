@@ -29,7 +29,7 @@ class UsersRepository(UserRepositoryInterface):
 
         return map(self.converter.to_dto, users, repeat(UsersDTO))
 
-    def create_user(self, create_user_dto: CreateUserDTO, group: Groups | None) -> UsersDTO:
+    def create_user(self, create_user_dto: CreateUserDTO) -> UsersDTO:
         user = Users.objects.create(
             **create_user_dto.__dict__
         )
@@ -39,10 +39,13 @@ class UsersRepository(UserRepositoryInterface):
     def update_user(self, update_user_dto: UpdateUserDTO, user: Users, group: Groups) -> UsersDTO:
         fields_to_update = update_user_dto.__dict__
         fields_to_update.update({'group': group})
-
+        print(group)
         for field, value in fields_to_update.items():
             if value or value is False:
                 setattr(user, field, value)
+
+        if not group:
+            user.group = None
 
         user.save()
 

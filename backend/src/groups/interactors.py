@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Iterable, Optional
 
 from groups.dto import GroupsDTO, GroupsWithoutIDDTO
 from groups.interfaces import GroupsInteractorInterface, GroupsRepositoryInterface
@@ -12,8 +12,8 @@ class GroupsInteractor(GroupsInteractorInterface):
     def get_group_by_id(self, group_id: int) -> Groups:
         return self.groups_repository.get_group_by_id(group_id)
 
-    def does_group_exist_by_name(self, group_name: str):
-        self.groups_repository.does_group_exist_by_name(group_name)
+    def does_group_exist_by_name(self, group_name: str, id: Optional[int] = None):
+        self.groups_repository.does_group_exist_by_name(group_name, id)
 
     def get_all_groups_dto(self) -> Iterable[GroupsDTO]:
         return self.groups_repository.get_all_groups_dto()
@@ -24,7 +24,7 @@ class GroupsInteractor(GroupsInteractorInterface):
 
     def update_group(self, group_dto: GroupsDTO) -> GroupsDTO:
         if group_dto.name:
-            self.does_group_exist_by_name(group_dto.name)
+            self.does_group_exist_by_name(group_dto.name, group_dto.id)
 
         group = self.get_group_by_id(group_dto.id)
         group_dict = group_dto.__dict__

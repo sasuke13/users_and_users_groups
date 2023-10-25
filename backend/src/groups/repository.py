@@ -1,5 +1,5 @@
 from itertools import repeat
-from typing import Iterable
+from typing import Iterable, Optional
 
 from annoying.functions import get_object_or_None
 
@@ -17,14 +17,15 @@ class GroupsRepository(GroupsRepositoryInterface):
 
         return group
 
-    def does_group_exist_by_name(self, group_name: str):
-        group = get_object_or_None(Groups, name=group_name)
+    def does_group_exist_by_name(self, group_name: str, id: Optional[int] = None):
+        group_by_name = get_object_or_None(Groups, name=group_name)
+        group_by_id = get_object_or_None(Groups, id=id)
 
-        if group:
+        if group_by_name != group_by_id and group_by_name is not None:
             raise InstanceAlreadyExists(f'Group with name: {group_name} already exists!')
 
     def get_all_groups_dto(self) -> Iterable[GroupsDTO]:
-        groups = Groups.objects.prefetch_related('users').all()
+        groups = Groups.objects.prefetch_related('users').all().order_by('pk')
 
         return map(self.converter.to_dto, groups, repeat(GroupsDTO))
 
@@ -32,14 +33,13 @@ class GroupsRepository(GroupsRepositoryInterface):
         group = Groups.objects.create(
             **group_dto.__dict__
         )
-
         return self.converter.to_dto(group, GroupsDTO)
 
     def update_group(self, group: Groups, group_dto: GroupsWithoutIDDTO) -> GroupsDTO:
         fields_to_update = group_dto.__dict__
 
         for field, value in fields_to_update.items():
-            if value or value == False:
+            if value or value is False:
                 setattr(group, field, value)
 
         group.save()

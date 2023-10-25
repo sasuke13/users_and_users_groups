@@ -8,15 +8,14 @@
 </head>
 <body>
     <header>
-        <a class="head_anchors">Users</a>
-        <a class="head_anchors">Groups</a>
-        <button class="add_button" id="showFormButton">Add users</button>
-        <div id="formContainer" class="hidden">
-            <input type="email" name="email" id="email" placeholder="Email">
-            <input type="checkbox" name="admin" id="is_admin" placeholder="Is admin">
-            <select name="group" id="select_group"></select>
-            <button id="sendButton">Send</button>
-            <button id="closeButton">Close</button>
+        <div>
+            <div class="header_div">
+                <a class="head_anchors" href="">Users</a>
+            </div>
+            <div class="header_div">
+                <a class="head_anchors" href="groups.html">Groups</a>
+            </div>
+            <button class="add_button" id="showFormButton">Add users</button>
         </div>
     </header>
 
@@ -32,10 +31,10 @@
             </tr>
         </thead>
         <tbody id="table">
-
+            
         </tbody>
     </table>
     
-    <script src="script.js"></script>
+    <script src="users_script.js"></script>
 </body>
 </html>
