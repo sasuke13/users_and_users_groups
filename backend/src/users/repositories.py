@@ -39,7 +39,7 @@ class UsersRepository(UserRepositoryInterface):
     def update_user(self, update_user_dto: UpdateUserDTO, user: Users, group: Groups) -> UsersDTO:
         fields_to_update = update_user_dto.__dict__
         fields_to_update.update({'group': group})
-        print(group)
+
         for field, value in fields_to_update.items():
             if value or value is False:
                 setattr(user, field, value)

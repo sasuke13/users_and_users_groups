@@ -25,4 +25,3 @@ class UpdateGroupsSerializer(serializers.Serializer):
     video = serializers.BooleanField(required=False)
     smart_access = serializers.BooleanField(required=False)
     diagrams = serializers.BooleanField(required=False)
-

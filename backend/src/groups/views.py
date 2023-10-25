@@ -86,4 +86,3 @@ class GroupsAPIView(APIView, ApiBaseView):
             return self._create_response_not_found(exception)
 
         return Response({'message': message}, status=status.HTTP_200_OK)
-

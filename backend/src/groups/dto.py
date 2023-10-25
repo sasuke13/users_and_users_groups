@@ -41,4 +41,3 @@ class UpdateGroupsDTO:
     video: Optional[bool] = None
     smart_access: Optional[bool] = None
     diagrams: Optional[bool] = None
-
