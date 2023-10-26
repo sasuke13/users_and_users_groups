@@ -34,8 +34,8 @@ class UsersAPIView(APIView, ApiBaseView):
         return Response({'users': serialized_users.data}, status=status.HTTP_200_OK)
 
     """
-        Accepts email, group_id and admin to create an user then returns message with created user. 
-        Also checks whether email is already taken. 
+    Accepts email, group_id and admin to create an user then returns message with created user.
+    Also checks whether email is already taken.
     """
     def post(self, request):
         create_user_serializer = CreateUserSerializer(data=request.data)
@@ -62,9 +62,9 @@ class UsersAPIView(APIView, ApiBaseView):
         }, status=status.HTTP_201_CREATED)
 
     """
-        Accepts email, group_id and admin to update an user then returns message with updated user. 
-        Also checks whether email is already taken but if email is the property of the very user
-        it will not raise an error. 
+    Accepts email, group_id and admin to update an user then returns message with updated user.
+    Also checks whether email is already taken but if email is the property of the very user
+    it will not raise an error.
     """
     def patch(self, request, user_id):
         update_user_serializer = UpdateUserSerializer(data=request.data)

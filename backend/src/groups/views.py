@@ -34,9 +34,9 @@ class GroupsAPIView(APIView, ApiBaseView):
         return Response({'groups': serialized_groups.data}, status=status.HTTP_200_OK)
 
     """
-        Accepts name, data_analytics, service_analytics, voice_analytics, queue_stats, voice_stats, 
-        video, smart_access and diagrams to create a group then returns message with the created group. 
-        Also checks whether name is already taken. 
+    Accepts name, data_analytics, service_analytics, voice_analytics, queue_stats, voice_stats,
+    video, smart_access and diagrams to create a group then returns message with the created group.
+    Also checks whether name is already taken.
     """
     def post(self, request):
         create_group_serializer = GroupsSerializer(data=request.data)
@@ -64,10 +64,10 @@ class GroupsAPIView(APIView, ApiBaseView):
             status=status.HTTP_201_CREATED)
 
     """
-        Accepts name, data_analytics, service_analytics, voice_analytics, queue_stats, voice_stats, 
-        video, smart_access and diagrams to update a group then returns message with the updated group. 
-        Also checks whether name is already taken but if name is the property of the very group
-        it will not raise an error. 
+    Accepts name, data_analytics, service_analytics, voice_analytics, queue_stats, voice_stats,
+    video, smart_access and diagrams to update a group then returns message with the updated group.
+    Also checks whether name is already taken but if name is the property of the very group
+    it will not raise an error.
     """
 
     def patch(self, request, group_id):
