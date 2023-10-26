@@ -121,22 +121,6 @@ const generateUpdateRow = (submitButton, closeButton, row, id)  =>{
     return newRow;
 }
 
-const generateBody = (data) =>{
-    let body = {
-        "name": data.name,
-        "data_analytics": data.data_analytics,
-        "service_analytics": data.service_analytics,
-        "voice_analytics": data.voice_analytics,
-        "queue_stats": data.queue_stats,
-        "voice_stats": data.voice_stats,
-        "video": data.video,
-        "smart_access": data.smart_access,
-        "diagrams": data.diagrams
-    }
-
-    return body
-}
-
 const checkMarkOrCross = (data) =>{
     if( data === false ) {
         return "×";
@@ -213,6 +197,9 @@ const processRequestData = (groupsData) => {
 
         addRow(groupsData.group);
     
+    } else if(groupsData.groups.length === 0){
+
+        clearTable();
     }
 }
 const processRequestMessages = (groupsData) => {
@@ -236,7 +223,7 @@ const processRequestMessages = (groupsData) => {
 
 const fetchGroups = async () => {
     try {
-        const response = await fetch('http://localhost:8000/groups/');
+        const response = await fetch('http://127.0.0.1:8000/groups/');
         const data = await response.json();
         groups = data.groups;
         processRequestData(data);
@@ -258,7 +245,7 @@ dataTable.addEventListener('click', async (e) => {
         if(!group_id)
             return;
 
-        fetch(`http://localhost:8000/groups/${group_id}/`, {
+        fetch(`http://127.0.0.1:8000/groups/${group_id}/`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -307,7 +294,7 @@ dataTable.addEventListener('click', async (e) => {
         if (!name)
             return callError('Name cannot be blank!');
         
-        fetch(`http://localhost:8000/groups/${id}/`, {
+        fetch(`http://127.0.0.1:8000/groups/${id}/`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -353,7 +340,7 @@ dataTable.addEventListener('click', async (e) => {
         if (!body.name)
             return callError('Name cannot be blank!');
         
-        fetch('http://localhost:8000/groups/', {
+        fetch('http://127.0.0.1:8000/groups/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

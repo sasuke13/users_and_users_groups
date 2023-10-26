@@ -1,0 +1,50 @@
+version: "3"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile-FrontEnd
+    ports:
+      - "8080:80" # Проброс порта (локальний порт: порт у контейнері)
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile-BackEnd
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/project
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  pg_admin:
+    image: dpage/pgadmin4
+    container_name: pg_admin
+    ports:
+      - "5000:80"
+    env_file:
+      - .env
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+
+
+volumes:
+  pg_data: { }
+  pgadmin_data: { }
+

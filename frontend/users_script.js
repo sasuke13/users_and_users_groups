@@ -72,22 +72,6 @@ const generateUpdateRow = (submitButton, closeButton, row, id)  =>{
     return newRow;
 }
 
-const generateBody = (data) =>{
-    let body = {
-        "name": data.name,
-        "data_analytics": data.data_analytics,
-        "service_analytics": data.service_analytics,
-        "voice_analytics": data.voice_analytics,
-        "queue_stats": data.queue_stats,
-        "voice_stats": data.voice_stats,
-        "video": data.video,
-        "smart_access": data.smart_access,
-        "diagrams": data.diagrams
-    }
-
-    return body
-}
-
 const checkMarkOrCross = (data) =>{
     if( data === false ) {
         return "×";
@@ -179,6 +163,8 @@ const processRequestData = (usersData) => {
 
         addRow(usersData.user);
     
+    } else if(usersData.users.length === 0){
+        clearTable();
     }
 }
 const processRequestMessages = (usersData) => {
@@ -202,7 +188,7 @@ const processRequestMessages = (usersData) => {
 
 const fetchUsers = async () => {
     try {
-        const response = await fetch('http://localhost:8000/users/');
+        const response = await fetch('http://127.0.0.1:8000/users/');
         const data = await response.json();
         userData = data.users;
         processRequestData(data);
@@ -213,7 +199,7 @@ const fetchUsers = async () => {
 
 const fetchGroups = async () => {
     try {
-        const response = await fetch('http://localhost:8000/groups/');
+        const response = await fetch('http://127.0.0.1:8000/groups/');
         const data = await response.json();
         return data.groups;
     } catch (error) {
@@ -237,7 +223,7 @@ dataTable.addEventListener('click', async (e) => {
         if(!user_id)
             return;
 
-        fetch(`http://localhost:8000/users/${user_id}/`, {
+        fetch(`http://127.0.0.1:8000/users/${user_id}/`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -281,7 +267,7 @@ dataTable.addEventListener('click', async (e) => {
         else if(!body.group_id)
             delete body.group_id;
 
-        fetch(`http://localhost:8000/users/${id}/`, {
+        fetch(`http://127.0.0.1:8000/users/${id}/`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -315,7 +301,7 @@ dataTable.addEventListener('click', async (e) => {
         else if(!select.value)
             delete body.group_id
         
-        fetch('http://localhost:8000/users/', {
+        fetch('http://127.0.0.1:8000/users/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

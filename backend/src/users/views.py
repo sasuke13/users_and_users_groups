@@ -10,6 +10,11 @@ from users.serializers import UsersSerializer, CreateUserSerializer, UpdateUserS
 
 
 class UsersAPIView(APIView, ApiBaseView):
+
+    """
+        Returns JSON of users or only 1 user by id.
+        Return depends on whether user put an id into the url.
+    """
     def get(self, request, user_id=None):
         user_interactor = UsersContainer.interactor()
 
@@ -28,6 +33,10 @@ class UsersAPIView(APIView, ApiBaseView):
 
         return Response({'users': serialized_users.data}, status=status.HTTP_200_OK)
 
+    """
+        Accepts email, group_id and admin to create an user then returns message with created user. 
+        Also checks whether email is already taken. 
+    """
     def post(self, request):
         create_user_serializer = CreateUserSerializer(data=request.data)
 
@@ -52,6 +61,11 @@ class UsersAPIView(APIView, ApiBaseView):
             'user': serialized_user.data
         }, status=status.HTTP_201_CREATED)
 
+    """
+        Accepts email, group_id and admin to update an user then returns message with updated user. 
+        Also checks whether email is already taken but if email is the property of the very user
+        it will not raise an error. 
+    """
     def patch(self, request, user_id):
         update_user_serializer = UpdateUserSerializer(data=request.data)
 
@@ -76,6 +90,10 @@ class UsersAPIView(APIView, ApiBaseView):
             'user': serialized_user.data
         }, status=status.HTTP_201_CREATED)
 
+    """
+        Accepts user_id to delete an user.
+        If id is wrong it will raise an error InstanceDoesNotExist.
+    """
     def delete(self, request, user_id):
         user_interactor = UsersContainer.interactor()
 

@@ -10,6 +10,11 @@ from groups.serializers import GroupsSerializer, UpdateGroupsSerializer
 
 
 class GroupsAPIView(APIView, ApiBaseView):
+
+    """
+        Returns JSON of groups or only 1 group by id.
+        Return depends on whether user put an id into the url.
+    """
     def get(self, request, group_id=None):
         group_interactor = GroupsContainer.interactor()
 
@@ -28,6 +33,11 @@ class GroupsAPIView(APIView, ApiBaseView):
 
         return Response({'groups': serialized_groups.data}, status=status.HTTP_200_OK)
 
+    """
+        Accepts name, data_analytics, service_analytics, voice_analytics, queue_stats, voice_stats, 
+        video, smart_access and diagrams to create a group then returns message with the created group. 
+        Also checks whether name is already taken. 
+    """
     def post(self, request):
         create_group_serializer = GroupsSerializer(data=request.data)
 
@@ -53,6 +63,13 @@ class GroupsAPIView(APIView, ApiBaseView):
         },
             status=status.HTTP_201_CREATED)
 
+    """
+        Accepts name, data_analytics, service_analytics, voice_analytics, queue_stats, voice_stats, 
+        video, smart_access and diagrams to update a group then returns message with the updated group. 
+        Also checks whether name is already taken but if name is the property of the very group
+        it will not raise an error. 
+    """
+
     def patch(self, request, group_id):
         update_group_serializer = UpdateGroupsSerializer(data=request.data)
 
@@ -76,6 +93,12 @@ class GroupsAPIView(APIView, ApiBaseView):
             'message': 'Group was successfully updated!',
             'group': serialized_group.data
         }, status=status.HTTP_201_CREATED)
+
+    """
+        Accepts group_id to delete a group.
+        If id is wrong it will raise an error InstanceDoesNotExist.
+        If group has members it will not let to delete that group.
+    """
 
     def delete(self, request, group_id):
         group_interactor = GroupsContainer.interactor()
